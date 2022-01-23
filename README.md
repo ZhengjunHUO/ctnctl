@@ -16,7 +16,7 @@ make
 cp ctnctl /usr/local/bin/ctnctl
 ```
 
-## Run
+## Usage
 ```bash
 ctnctl -h
 Apply firewall rules to container based on eBPF Cgroups
@@ -37,6 +37,18 @@ Flags:
   -h, --help   help for ctnctl
 
 Use "ctnctl [command] --help" for more information about a command.
+```
+
+## Example
+```bash
+# block in egress ip
+ctnctl block -e 8.8.8.8 ctn
+# block connection from 192.168.1.20 on port 8000
+ctnctl block -i -t 192.168.1.20:8000 ctn
+# check rules on ctn
+ctnctl show ctn
+# debug
+ctnctl follow ctn 
 ```
 
 ## Cleanup
