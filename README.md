@@ -47,10 +47,19 @@ ctnctl block -e 8.8.8.8 ctn
 ctnctl block -i -t 192.168.1.20:8000 ctn
 # check rules on ctn
 ctnctl show ctn
+```
+![show](./docs/show1.png)
+```bash
 # debug
 ctnctl follow ctn 
 ```
-
+![follow](./docs/follow1.png)
+```bash
+# remove rule
+ctnctl unblock -e 8.8.8.8 ctn
+# remove all rules associated to container
+ctnctl clear ctn
+```
 ## Cleanup
 ```bash
 make clean
