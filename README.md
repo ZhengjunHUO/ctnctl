@@ -41,7 +41,7 @@ Use "ctnctl [command] --help" for more information about a command.
 
 ## Example
 ```bash
-# block in egress ip
+# block an egress ip
 ctnctl block -e 8.8.8.8 ctn
 # block connection from 192.168.1.20 on port 8000
 ctnctl block -i -t 192.168.1.20:8000 ctn
