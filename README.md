@@ -10,6 +10,12 @@
 
 // TODO: add compatibility to elder kernel ; cgroups v1 ; different os/arch
 
+## Switch to cgroup v2 & disable cgroup v1
+```
+sed -i -e 's/^GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="systemd.unified_cgroup_hierarchy=1 cgroup_no_v1=all"/' /etc/default/grub
+update-grub
+```
+
 ## Build
 ```bash
 make
