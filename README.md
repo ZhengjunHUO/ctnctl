@@ -3,6 +3,9 @@
 
 ### Developed and tested under:
 - Fedora 32 kernel 5.11.22-100.fc32.x86_64
+```bash
+dnf install make glibc-devel.i686 elfutils-libelf-devel wget tar vim tmux jq systemtap-sdt-devel clang bcc bcc-devel strace git llvm
+```
 - Go version 1.17.3
 - Cgroup v2
 - Docker version 20.10.7 (Cgroup driver: systemd)
