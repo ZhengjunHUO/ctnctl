@@ -17,11 +17,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	"fmt"
 	"log"
+	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/ZhengjunHUO/ctnctl/internal/config"
+	"github.com/ZhengjunHUO/ctnctl/pkg"
 )
 
 // loadfwCmd represents the loadfw command
@@ -34,9 +35,33 @@ var loadfwCmd = &cobra.Command{
 	PreRun: config.ParseConfig,
 	Run: func(cmd *cobra.Command, args []string) {
 		fwconfig := config.DecodeConfig()
-		fmt.Println(fwconfig)
 
-		// TODO: Apply the parsed rules to container
+		podName := fwconfig.PodName
+		if len(args) > 0 {
+			podName = args[0]
+		}
+
+		// Create and Pin / Load pinned bpf resources
+		if err := pkg.CreateLinkIfNotExit(podName); err != nil {
+			os.Exit(1)
+		}
+
+		// Apply the parsed rules to container
+		for _,v := range fwconfig.IngressRules.L3 {
+			pkg.AddIP(string(v), podName, true)
+		}
+
+		for _,v := range fwconfig.IngressRules.L4 {
+			pkg.AddIPPort(v.IP, podName, v.Port, true)
+		}
+
+		for _,v := range fwconfig.EgressRules.L3 {
+			pkg.AddIP(string(v), podName, false)
+		}
+
+		for _,v := range fwconfig.EgressRules.L4 {
+			pkg.AddIPPort(v.IP, podName, v.Port, false)
+		}
 	},
 }
 
