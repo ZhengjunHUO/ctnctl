@@ -17,21 +17,26 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
+	"fmt"
 	"log"
+
 	"github.com/spf13/cobra"
 	"github.com/ZhengjunHUO/ctnctl/internal/config"
 )
 
 // loadfwCmd represents the loadfw command
 var loadfwCmd = &cobra.Command{
-	Use:   "loadfw --config <PATH_TO_CONFIG_FILE> <CONTAINER_NAME|CONTAINER_ID>",
+	Use:   "loadfw --config <PATH_TO_CONFIG_FILE> [CONTAINER_NAME|CONTAINER_ID]",
 	Short: "Load a list of firewall rules to to a container from a file",
-	Long: `Load a list of firewall rules to to a container from a file`,
-	Args: cobra.MinimumNArgs(1),
+	Long:	`Load a list of firewall rules to to a container from a file, if CONTAINER_NAME or 
+		CONTAINER_ID is provided, the podName in the config file will be overrided`,
+	//Args: cobra.MinimumNArgs(1),
 	PreRun: config.ParseConfig,
 	Run: func(cmd *cobra.Command, args []string) {
-		// TO IMPLEMENT
-		// Apply the parsed rules to container
+		fwconfig := config.DecodeConfig()
+		fmt.Println(fwconfig)
+
+		// TODO: Apply the parsed rules to container
 	},
 }
 

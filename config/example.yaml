@@ -1,0 +1,10 @@
+podName: ctn2
+ingressRules:
+  l3: []
+  l4:
+  - ip: 172.17.0.2
+    port: 8000
+egressRules:
+  l3:
+    - 8.8.8.8
+  l4: []
