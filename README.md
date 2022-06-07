@@ -39,6 +39,7 @@ Available Commands:
   completion  Generate the autocompletion script for the specified shell
   follow      Print out the container's traffic flow
   help        Help about any command
+  loadfw      Load a list of firewall rules to to a container from a file
   show        Show container's firewall rules
   unblock     Remove an ip from container's blacklist
 
