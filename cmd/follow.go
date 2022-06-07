@@ -28,7 +28,7 @@ var followCmd = &cobra.Command{
 	Long: `Print out the container's traffic flow`,
 	Args: cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		pkg.PrintDataflow(args[0])
+		_ = pkg.PrintDataflow(args[0])
 	},
 }
 

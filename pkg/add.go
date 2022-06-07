@@ -75,11 +75,11 @@ func CreateLinkIfNotExit(name string) error {
 	flowMap := collection.Maps[flowMapName]
 
 	// Pin maps
-	egressMap.Pin(egressMapPinPath)
-	ingressMap.Pin(ingressMapPinPath)
-	egressL4Map.Pin(egressL4MapPinPath)
-	ingressL4Map.Pin(ingressL4MapPinPath)
-	flowMap.Pin(dataflowPinPath)
+	_ = egressMap.Pin(egressMapPinPath)
+	_ = ingressMap.Pin(ingressMapPinPath)
+	_ = egressL4Map.Pin(egressL4MapPinPath)
+	_ = ingressL4Map.Pin(ingressL4MapPinPath)
+	_ = flowMap.Pin(dataflowPinPath)
 
 	// attach bpf program to specific cgroup 
 	lnk_egs, err := link.AttachCgroup(link.CgroupOptions{
@@ -101,10 +101,10 @@ func CreateLinkIfNotExit(name string) error {
 	}
 
 	// pin links
-	lnk_egs.Pin(egressLinkPinPath)
+	_ = lnk_egs.Pin(egressLinkPinPath)
 	lnk_egs.Close()
 
-	lnk_igs.Pin(ingressLinkPinPath)
+	_ = lnk_igs.Pin(ingressLinkPinPath)
 	lnk_igs.Close()
 
 	return nil

@@ -40,7 +40,7 @@ func PrintFirewall(name string) {
 	// Get container's full ID
 	cgroupId := GetContainerID(name)
 	if len(cgroupId) == 0 {
-		fmt.Println("Invalid container name or id!\n")
+		fmt.Println("Invalid container name or id!")
 	}
 
 	// Check if dir exist

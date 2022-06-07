@@ -26,12 +26,13 @@ func RemovePinnedResource(name string) error {
 
 	// unpin all links related to container
 	for i := range allLinks {
-		l, err := link.LoadPinnedCgroup(pinPath + allLinks[i], nil)
+		//l, err := link.LoadPinnedCgroup(pinPath + allLinks[i], nil)
+		l, err := link.LoadPinnedLink(pinPath + allLinks[i], nil)
 		if err != nil {
 			return err
 		}
 
-		l.Unpin()
+		_ = l.Unpin()
 		l.Close()
 	}
 
@@ -42,7 +43,7 @@ func RemovePinnedResource(name string) error {
 			return err
 		}
 
-		m.Unpin()
+		_ = m.Unpin()
 		m.Close()
 	}
 

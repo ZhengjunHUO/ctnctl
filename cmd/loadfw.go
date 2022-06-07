@@ -48,19 +48,19 @@ var loadfwCmd = &cobra.Command{
 
 		// Apply the parsed rules to container
 		for _,v := range fwconfig.IngressRules.L3 {
-			pkg.AddIP(string(v), podName, true)
+			_ = pkg.AddIP(string(v), podName, true)
 		}
 
 		for _,v := range fwconfig.IngressRules.L4 {
-			pkg.AddIPPort(v.IP, podName, v.Port, true)
+			_ = pkg.AddIPPort(v.IP, podName, v.Port, true)
 		}
 
 		for _,v := range fwconfig.EgressRules.L3 {
-			pkg.AddIP(string(v), podName, false)
+			_ = pkg.AddIP(string(v), podName, false)
 		}
 
 		for _,v := range fwconfig.EgressRules.L4 {
-			pkg.AddIPPort(v.IP, podName, v.Port, false)
+			_ = pkg.AddIPPort(v.IP, podName, v.Port, false)
 		}
 	},
 }

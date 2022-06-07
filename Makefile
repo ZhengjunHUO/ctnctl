@@ -13,5 +13,8 @@ build_ebpf: bpf/bpf.c
 build_prog: build_ebpf
 	CGO_ENABLED=0 go build -o ctnctl ./
 
+lint:
+	golangci-lint run
+
 clean:
 	$(RM) pkg/bpf.o ctnctl
