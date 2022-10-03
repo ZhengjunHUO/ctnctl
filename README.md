@@ -1,4 +1,4 @@
-# Migrated from [my ciliumlearn project](https://github.com/ZhengjunHUO/ciliumlearn/tree/main/ebpf/ctnctl
+# Migrated from [my ciliumlearn project](https://github.com/ZhengjunHUO/ciliumlearn/tree/main/ebpf/ctnctl)
 # Apply firewall rules to docker container by attaching eBPF program to its cgroups
 
 ### Developed and tested under:
