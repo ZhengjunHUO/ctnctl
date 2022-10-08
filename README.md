@@ -57,6 +57,9 @@ docker run --name ctn1 -d alpine sleep infinity
 # bring up a web server container serving on port 8000
 docker run --name ctn2 -d alpine sh -c 'while true; do echo -e "HTTP/1.0 200 OK\r\n\r\nHello HUO~" | nc -l -p 8000; done'
 ```
+### Note
+Do not test with nsenter, cause it doesn't enter the cgroups
+
 ### Use CLI
 ```bash
 # block an egress ip
