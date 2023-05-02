@@ -2,9 +2,11 @@
 # Apply firewall rules to docker container by attaching eBPF program to its cgroups
 
 ### Developed and tested under:
-- Fedora 32 kernel 5.11.22-100.fc32.x86_64
 ```bash
+# Fedora 32 kernel 5.11.22-100.fc32.x86_64
 dnf install make glibc-devel.i686 elfutils-libelf-devel wget tar vim tmux jq systemtap-sdt-devel clang bcc bcc-devel strace git llvm
+# Ubuntu 22.04.2 LTS kernel 5.19.0-38-generic
+apt install git vim build-essential clang gcc-multilib llvm-dev systemtap-sdt-dev
 ```
 - Go version 1.17.3
 - Cgroup v2
