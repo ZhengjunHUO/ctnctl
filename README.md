@@ -1,5 +1,7 @@
 # Migrated from [my ciliumlearn project](https://github.com/ZhengjunHUO/ciliumlearn/tree/main/ebpf/ctnctl)
-# Apply firewall rules to docker container by attaching eBPF program to its cgroups
+Apply firewall rules to docker container by attaching eBPF program to its cgroups
+- Rewritten with `Rust` based on libbpf-rs, see [here](https://github.com/ZhengjunHUO/ctnctl-rs) for details.
+
 
 ### Developed and tested under:
 ```bash
