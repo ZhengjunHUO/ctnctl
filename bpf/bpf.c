@@ -1,8 +1,8 @@
 #include <linux/bpf.h>
+#include <netinet/in.h>
 #include <netinet/ip.h>
 #include <netinet/tcp.h>
 #include <netinet/udp.h>
-#include <netinet/in.h>
 #include <stdbool.h>
 #include "bpf_helpers.h"
 
@@ -12,8 +12,8 @@ typedef struct {
     __u32 daddr;
     __u16 sport;
     __u16 dport;
-    __u8  proto;
-    __u8  bitmap;
+    __u8 proto;
+    __u8 bitmap;
 } pkt;
 
 /* used as key in L4 blacklist */
@@ -65,8 +65,8 @@ struct bpf_map_def SEC("maps") data_flow = {
 
 /* apply saved rules to ingress/egress packets, drop the packet if match */
 static inline int filter_packet(struct __sk_buff *skb, bool isIngress) {
-    void *data = (void*)(long)skb->data;
-    void *data_end = (void*)(long)skb->data_end;
+    void *data = (void *)(long)skb->data;
+    void *data_end = (void *)(long)skb->data_end;
 
     struct iphdr *iphd = data;
     __u32 iphdr_len = sizeof(struct iphdr);
@@ -111,18 +111,18 @@ static inline int filter_packet(struct __sk_buff *skb, bool isIngress) {
     bool isBannedL3;
     bool isBannedL4;
     if (isIngress) {
-        bpf_printk("Ingress from %lu",iphd->saddr);
-	s.addr = p.saddr;
-	// we don't care source port
-	s.port = p.dport;
-	isBannedL3 = bpf_map_lookup_elem(&ingress_blacklist, &iphd->saddr);
-	isBannedL4 = bpf_map_lookup_elem(&ingress_l4_blacklist, &s);
-    }else{
-        bpf_printk("Egress to %lu",iphd->daddr);
-	s.addr = p.daddr;
-	s.port = p.dport;
-	isBannedL3 = bpf_map_lookup_elem(&egress_blacklist, &iphd->daddr);
-	isBannedL4 = bpf_map_lookup_elem(&egress_l4_blacklist, &s);
+        bpf_printk("Ingress from %lu", iphd->saddr);
+        s.addr = p.saddr;
+        // we don't care source port
+        s.port = p.dport;
+        isBannedL3 = bpf_map_lookup_elem(&ingress_blacklist, &iphd->saddr);
+        isBannedL4 = bpf_map_lookup_elem(&ingress_l4_blacklist, &s);
+    } else {
+        bpf_printk("Egress to %lu", iphd->daddr);
+        s.addr = p.daddr;
+        s.port = p.dport;
+        isBannedL3 = bpf_map_lookup_elem(&egress_blacklist, &iphd->daddr);
+        isBannedL4 = bpf_map_lookup_elem(&egress_l4_blacklist, &s);
     }
 
     p.bitmap = (isBannedL3 << 1) | (isBannedL4 << 2) | isIngress;
@@ -139,13 +139,9 @@ static inline int filter_packet(struct __sk_buff *skb, bool isIngress) {
 }
 
 SEC("cgroup_skb/ingress")
-int ingress_filter(struct __sk_buff *skb) {
-    return filter_packet(skb, true);
-}
+int ingress_filter(struct __sk_buff *skb) { return filter_packet(skb, true); }
 
 SEC("cgroup_skb/egress")
-int egress_filter(struct __sk_buff *skb) {
-    return filter_packet(skb, false);
-}
+int egress_filter(struct __sk_buff *skb) { return filter_packet(skb, false); }
 
 char __license[] SEC("license") = "Dual MIT/GPL";
